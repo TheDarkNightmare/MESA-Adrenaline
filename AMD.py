@@ -1,8 +1,19 @@
 import os
 import requests
-from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QHBoxLayout, QLabel, QTabWidget, QWidget, QPushButton, QToolButton, QProgressBar
+from PyQt5.QtWidgets import (
+    QApplication,
+    QMainWindow,
+    QVBoxLayout,
+    QHBoxLayout,
+    QLabel,
+    QTabWidget,
+    QWidget,
+    QPushButton,
+    QProgressBar,
+)
 from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtGui import QFont, QFontDatabase, QIcon
+from qt_material import apply_stylesheet
 import subprocess
 from datetime import datetime
 import sys
@@ -30,7 +41,7 @@ class AdrenalineStyleApp(QMainWindow):
         self.setGeometry(100, 100, 1200, 800)
 
         # Ensure font is installed and used correctly
-        self.font_family = "Klavika Medium Condensed"  # Updated exact name from font list
+        self.font_family = "Roboto"
         if self.font_family not in QFontDatabase().families():
             print(f"Warning: Font '{self.font_family}' not found, falling back to default.")
             self.font_family = "Arial"  # Fallback font
@@ -89,9 +100,8 @@ class AdrenalineStyleApp(QMainWindow):
         main_layout = QVBoxLayout()
 
         title = QLabel("Welcome to the AMD Adrenaline for Linux.\nThis tool is currently in alfa state.")
-        title.setFont(QFont("Klavika Medium Condensed", 16))
+        title.setFont(QFont(self.font_family, 16))
         title.setAlignment(Qt.AlignCenter)
-        title.setStyleSheet("color: white; margin-bottom: 10px;")
         main_layout.addWidget(title)
 
         main_layout.setContentsMargins(10, 10, 10, 10)
@@ -114,10 +124,7 @@ class AdrenalineStyleApp(QMainWindow):
             f"Version: 0.1.003-alfa",
             f"Updated: {current_time}"
         ))
-        block1_label.setStyleSheet(
-            "background-color: #2B2B2B; color: white; border: 1px solid #555; padding: 20px; border-radius: 8px;"
-        )
-        block1_label.setFont(QFont("Klavika Medium Condensed", 12))
+        block1_label.setFont(QFont(self.font_family, 12))
         block1_label.setAlignment(Qt.AlignTop)
         block1_layout.addWidget(block1_label)
         block1.setFixedSize(600, 150)  # Adjust block size
@@ -132,9 +139,6 @@ class AdrenalineStyleApp(QMainWindow):
             f"<br>Kernel: {kernel_version}",
             f"Mesa Version: {mesa_version}"
         ))
-        block2_label.setStyleSheet(
-            "background-color: #2B2B2B; color: white; border: 1px solid #555; padding: 20px; border-radius: 8px;"
-        )
         block2_label.setFont(QFont(self.font_family, 12))
         block2_label.setAlignment(Qt.AlignTop)
         block2_layout.addWidget(block2_label)
@@ -159,9 +163,6 @@ class AdrenalineStyleApp(QMainWindow):
             f"<br>Status: <span style='color: {sam_color};'>{'Enabled' if sam_status else 'Disabled'}</span>",
             "<br>AMD Smart Access Memory™ technology unlocks higher performance <br> across select titles by providing AMD Ryzen™ processors with immediate,<br> full access to AMD Radeon™ graphics memory for faster data transfers between the two."
         ))
-        block3_label.setStyleSheet(
-            "background-color: #2B2B2B; color: white; border: 1px solid #555; padding: 20px; border-radius: 8px;"
-        )
         block3_label.setFont(QFont(self.font_family, 12))
         block3_label.setAlignment(Qt.AlignTop)
         block3_layout.addWidget(block3_label)
@@ -183,9 +184,6 @@ class AdrenalineStyleApp(QMainWindow):
             f"Configuration: <span style='color: {config_color};'>{config_label}</span>",
             "<br>It is required to unlock access clocks and voltages in sysfs by appending the Kernel parameter"
         ))
-        block4_label.setStyleSheet(
-            "background-color: #2B2B2B; color: white; border: 1px solid #555; padding: 20px; border-radius: 8px;"
-        )
         block4_label.setFont(QFont(self.font_family, 12))
         block4_label.setAlignment(Qt.AlignTop)
         block4_layout.addWidget(block4_label)
@@ -218,7 +216,6 @@ class AdrenalineStyleApp(QMainWindow):
         title = QLabel("Performance Monitoring")
         title.setFont(QFont(self.font_family, 13))
         title.setAlignment(Qt.AlignCenter)
-        title.setStyleSheet("color: white; margin-bottom: 10px;")
         main_layout.addWidget(title)
 
         main_layout.setContentsMargins(10, 10, 10, 10)
@@ -246,9 +243,6 @@ class AdrenalineStyleApp(QMainWindow):
             f"<br><b>Temperature:</b> {gpu_temp}",
             f"<br><b>Fan Speed:</b> {gpu_fan_speed}"
             ))
-        self.gpu_label.setStyleSheet(
-            "background-color: #2B2B2B; color: white; border: 1px solid #555; padding: 20px; border-radius: 8px;"
-        )
         self.gpu_label.setFont(QFont(self.font_family, 11))
         self.gpu_label.setAlignment(Qt.AlignTop)
         block1_layout.addWidget(self.gpu_label)
@@ -267,9 +261,6 @@ class AdrenalineStyleApp(QMainWindow):
             f"<br><b>Temperature:</b> {cpu_temp}",
             f"<br><b>Frequency:</b> {cpu_mhz}"
         ))
-        block2_label.setStyleSheet(
-            "background-color: #2B2B2B; color: white; border: 1px solid #555; padding: 20px; border-radius: 8px;"
-        )
         block2_label.setFont(QFont(self.font_family, 11))
         block2_label.setAlignment(Qt.AlignTop)
         block2_layout.addWidget(block2_label)
@@ -291,9 +282,6 @@ class AdrenalineStyleApp(QMainWindow):
 
         # RAM Information Title
         block3_title = QLabel(" &nbsp;&nbsp;<b>RAM Information</b>")
-        block3_title.setStyleSheet(
-            "background-color: #2B2B2B; color: white; border: none; padding: 5px;"
-        )
         block3_title.setFont(QFont(self.font_family, 12))
         block3_title.setAlignment(Qt.AlignLeft)
         block3_layout.addWidget(block3_title)
@@ -304,20 +292,6 @@ class AdrenalineStyleApp(QMainWindow):
         ram_usage_bar.setValue(used_ram)
         ram_usage_bar.setTextVisible(True)
         ram_usage_bar.setFormat(f"{used_ram}MB / {total_ram}MB")  # Display usage on the bar
-        ram_usage_bar.setStyleSheet(
-            """
-            QProgressBar {
-                border: 1px solid #555;
-                border-radius: 4px;
-                background-color: #3C3C3C;
-                text-align: center;
-            }
-            QProgressBar::chunk {
-                background-color: #5CB85C;  /* Bar color */
-                border-radius: 4px;
-            }
-            """
-        )
         # Adjust bar length
         ram_usage_bar.setFixedWidth(500)  # Set the desired width (e.g., 500 pixels)
         ram_usage_bar.setFixedHeight(25)  # Optional: adjust bar height
@@ -325,9 +299,6 @@ class AdrenalineStyleApp(QMainWindow):
         block3_layout.addWidget(ram_usage_bar)
 
         # Set the overall block styling
-        block3.setStyleSheet(
-            "background-color: #2B2B2B; color: white; border: 1px solid #555; padding: 10px; border-radius: 8px;"
-        )
         block3.setFixedSize(590, 150)  # Adjust block size to fit content
 
 
@@ -341,9 +312,6 @@ class AdrenalineStyleApp(QMainWindow):
             "<br>Status: Placeholder",
             "<br>Details: Placeholder"
         ))
-        block4_label.setStyleSheet(
-            "background-color: #2B2B2B; color: white; border: 1px solid #555; padding: 20px; border-radius: 8px;"
-        )
         block4_label.setFont(QFont(self.font_family, 12))
         block4_label.setAlignment(Qt.AlignTop)
         block4_layout.addWidget(block4_label)
@@ -365,7 +333,7 @@ class AdrenalineStyleApp(QMainWindow):
                 # Set up a timer to update GPU information dynamically
         self.timer = QTimer()
         self.timer.timeout.connect(self.update_gpu_info)
-        self.timer.start(100)  # Update every 3 seconds
+        self.timer.start(3000)  # Update every 3 seconds
 
         return widget
 
@@ -388,7 +356,6 @@ class AdrenalineStyleApp(QMainWindow):
 
         # Add a Toggle SAM button
         button = QPushButton("Toggle SAM")
-        button.setStyleSheet("background-color: red; color: white; padding: 10px; font-size: 14px;")
 
         layout.addWidget(title)
         layout.addWidget(button)
@@ -397,11 +364,12 @@ class AdrenalineStyleApp(QMainWindow):
 
 
 if __name__ == "__main__":
-    # Ustaw zmienne środowiskowe dla Waylanda
-    os.environ["QT_QPA_PLATFORM"] = "wayland"
-    os.environ["QT_QPA_PLATFORMTHEME"] = "qt5ct"
+    if sys.platform.startswith("linux"):
+        os.environ["QT_QPA_PLATFORM"] = "wayland"
+        os.environ["QT_QPA_PLATFORMTHEME"] = "qt5ct"
 
     app = QApplication([])
+    apply_stylesheet(app, theme="dark_red.xml")
 
     icon_url = "https://raw.githubusercontent.com/TheDarkNightmare/PulseTool/main/icon.png"
     icon_local_path = "./icon.png"
@@ -416,7 +384,7 @@ if __name__ == "__main__":
         print("Failed to set the icon.")
 
     # Ensure the font is installed
-    font_family = "Klavika Medium Condensed"  # Font name to apply globally
+    font_family = "Roboto"  # Font name to apply globally
     if font_family in QFontDatabase().families():
         app.setFont(QFont(font_family))  # Set the global application font
         print(f"Using font: {font_family}")
@@ -425,9 +393,6 @@ if __name__ == "__main__":
 
     # Create the main window
     window = AdrenalineStyleApp()
-
-    # Set background color for the main window
-    window.setStyleSheet("background-color: #31363b;")
 
     window.show()
 
